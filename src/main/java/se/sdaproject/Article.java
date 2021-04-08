@@ -13,7 +13,7 @@ public class Article {
     private String body;
     private String authorName;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "article") //TODO: check if correct
     private List<Comment> comments;
 
     public Article() {
@@ -58,4 +58,11 @@ public class Article {
         this.authorName = authorName;
     }
 
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
 }

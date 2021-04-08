@@ -47,7 +47,7 @@ public class ArticleController {
         Article article = articleRepository.save(updatedArticle);
         return ResponseEntity.ok(article);
     }
-    
+
     //Delete one article
     @DeleteMapping("/{id}")
     public ResponseEntity<Article> deleteArticle(@PathVariable Long id) {

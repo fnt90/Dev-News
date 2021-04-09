@@ -45,7 +45,12 @@ public class TopicController {
     //@PutMapping("/topics/{id}")
 
     //Delete a topic
-    //@DeleteMapping("/topics/{id}")
+    @DeleteMapping("/topics/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteTopic(@PathVariable Long id) {
+        Topic topic = topicRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+        topicRepository.delete(topic);
+    }
 
     //Delete association of a topic for one article
     @DeleteMapping("/articles/{articleId}/topics/{topicId}")

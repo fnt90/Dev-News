@@ -16,6 +16,10 @@ public class Article {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "article") //TODO: check if correct
     private List<Comment> comments;
 
+    @ManyToMany(mappedBy = "articles")
+    private List<Topic> topics;
+
+
     public Article() {
 
     }

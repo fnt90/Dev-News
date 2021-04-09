@@ -1,6 +1,7 @@
 package se.sdaproject;
 
 import org.aspectj.lang.annotation.DeclareError;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,16 +14,25 @@ public class TopicController {
     TopicRepository topicRepository;
     ArticleRepository articleRepository;
 
+    @Autowired
     public TopicController(TopicRepository topicRepository, ArticleRepository articleRepository) {
         this.topicRepository = topicRepository;
         this.articleRepository = articleRepository;
     }
 
     //List all topics
-    //@GetMapping("/topics")
+    @GetMapping("/topics")
+    public List<Topic> listAllTopics() {
+        List<Topic> topics = topicRepository.findAll();
+        return topics;
+    }
 
     //List all topics associated with one article
-    //@GetMapping("/articles/{articleId}/topics")
+    @GetMapping("/articles/{articleId}/topics")
+    public ResponseEntity<List<Topic>> listTopicsOnArticle(@PathVariable Long articleId) {
+        articleRepository.findById(articleId).orElseThrow(ResourceNotFoundException::new);
+        return ResponseEntity.ok(topicRepository.findByArticleId(articleId));
+    }
 
     //Create new topic
     @PostMapping("/topics")
@@ -42,7 +52,13 @@ public class TopicController {
     }
 
     //Update topic
-    //@PutMapping("/topics/{id}")
+    @PutMapping("/topics/{id}")
+    public ResponseEntity<Topic> updateTopic(@PathVariable Long id, @RequestBody Topic updatedTopic) {
+        topicRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+        updatedTopic.setId(id);
+        Topic topic = topicRepository.save(updatedTopic);
+        return ResponseEntity.ok(topic);
+    }
 
     //Delete a topic
     @DeleteMapping("/topics/{id}")
@@ -73,16 +89,5 @@ public class TopicController {
         List<Article> articles = topic.getArticles();
         return ResponseEntity.ok(articles);
     }
-
-    /*GET	/topics
-    * GET	/articles/{articleId}/topics
-    *POST	/articles/{articleId}/topics
-    *POST	/topics
-    *PUT	/topics/{id}
-    *DELETE	/topics/{id}
-    *DELETE	/articles/{articleId}/topics/{topicId}
-    *GET	/topics/{topicId}/articles
-    *
-    * */
 
 }

@@ -7,29 +7,33 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
     @Column(nullable = false)
     private String body;
+
+    @NotBlank
     @Column(nullable = false)
     private String authorName;
 
     @ManyToOne
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @JsonIdentityReference(alwaysAsId = true)
     @JoinColumn(nullable = false)
-    @NotNull
+   // @NotNull
    // @JoinColumn(name = "article_id")
     private Article article;
 
-    public Comment() {
-    }
+/*    public Comment() {
+    }*/
 
     /*public Comment(String body, String authorName, Article article) { //TODO check if correct
         this.body = body;
@@ -57,7 +61,7 @@ public class Comment {
         return authorName;
     }
 
-    public void setAuthorName() {
+    public void setAuthorName(String authorName) {
         this.authorName = authorName;
     }
 

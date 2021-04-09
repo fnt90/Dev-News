@@ -56,6 +56,8 @@ public class ArticleController {
         return ResponseEntity.ok(article);
     }
 
+    //Get all comments on one article
+    //@GetMapping("/{id}/comments")
 
 
 

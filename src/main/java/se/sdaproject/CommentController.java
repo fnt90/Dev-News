@@ -14,27 +14,36 @@ public class CommentController {
     CommentRepository commentRepository;
     ArticleRepository articleRepository;
 
+    @Autowired
     public CommentController(CommentRepository commentRepository, ArticleRepository articleRepository) {
         this.commentRepository = commentRepository;
         this.articleRepository = articleRepository;
     }
 
-    //TODO: check autowired?
+
 
     //View all comments on one article
-    /*@GetMapping("/articles/{articleId}/comments")
-    public List<Comment> listComments(@PathVariable Long articleId) {
-        Article article = articleRepository.findById(articleId).orElseThrow(ResourceNotFoundException::new);
-        List<Comment> comments = commentRepository.findAllById(); //TODO no relation to article
-        return comments;
-    }*/
+    @GetMapping("/articles/{articleId}/comments")
+    public ResponseEntity<List<Comment>> listComments(@PathVariable Long articleId) {
+        //this checks if the articleId given actually exists
+        //articleRepository.findById(articleId).orElseThrow(ResourceNotFoundException::new);
+        //how to get all comments with a certain articleId? get? @where ?
+        //@Where(clause="article=articleid")
+        //commentRepository.findById(articleId).orElseThrow(ResourceNotFoundException::new);
+        //List<Comment> comments = commentRepository.get; //TODO no relation to article
+        return ResponseEntity.ok(commentRepository.findByArticleId(articleId));
+    }
 
     //View all comments by one author
     @GetMapping("/comments?authorName={authorName}")
+    public ResponseEntity<List<Comment>> viewAllCommentsByAuthor(@PathVariable String authorName) {
+
+        return ResponseEntity.ok(commentRepository.findByAuthorName(authorName));
+    }
 
     //Add new comment on article
     @PostMapping("/articles/{articleId}/comments")
-    public ResponseEntity<Comment> createComment(@PathVariable Long articleId, @RequestBody Comment comment) {
+    public ResponseEntity<Comment> createComment(@PathVariable Long articleId, @Valid @RequestBody Comment comment) {
         Article article = articleRepository.findById(articleId).orElseThrow(ResourceNotFoundException::new);
         comment.setArticle(article);
         commentRepository.save(comment);

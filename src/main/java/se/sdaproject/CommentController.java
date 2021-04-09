@@ -20,23 +20,17 @@ public class CommentController {
         this.articleRepository = articleRepository;
     }
 
-
-
     //View all comments on one article
     @GetMapping("/articles/{articleId}/comments")
     public ResponseEntity<List<Comment>> listComments(@PathVariable Long articleId) {
-        //this checks if the articleId given actually exists
-        //articleRepository.findById(articleId).orElseThrow(ResourceNotFoundException::new);
-        //how to get all comments with a certain articleId? get? @where ?
-        //@Where(clause="article=articleid")
-        //commentRepository.findById(articleId).orElseThrow(ResourceNotFoundException::new);
-        //List<Comment> comments = commentRepository.get; //TODO no relation to article
+        articleRepository.findById(articleId).orElseThrow(ResourceNotFoundException::new);
         return ResponseEntity.ok(commentRepository.findByArticleId(articleId));
     }
 
     //View all comments by one author
     @GetMapping(value = "/comments", params = {"authorName"})
     public ResponseEntity<List<Comment>> viewAllCommentsByAuthor(@RequestParam String authorName) {
+        //commentRepository.findByAuthorName(authorName).orElseThrow(ResourceNotFoundException::new);
         return ResponseEntity.ok(commentRepository.findByAuthorName(authorName));
     }
 

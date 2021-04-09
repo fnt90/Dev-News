@@ -35,9 +35,8 @@ public class CommentController {
     }
 
     //View all comments by one author
-    @GetMapping("/comments?authorName={authorName}")
-    public ResponseEntity<List<Comment>> viewAllCommentsByAuthor(@PathVariable String authorName) {
-
+    @GetMapping(value = "/comments", params = {"authorName"})
+    public ResponseEntity<List<Comment>> viewAllCommentsByAuthor(@RequestParam String authorName) {
         return ResponseEntity.ok(commentRepository.findByAuthorName(authorName));
     }
 

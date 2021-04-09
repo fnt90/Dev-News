@@ -14,7 +14,7 @@ public class TopicController {
     TopicRepository topicRepository;
     ArticleRepository articleRepository;
 
-    @Autowired
+
     public TopicController(TopicRepository topicRepository, ArticleRepository articleRepository) {
         this.topicRepository = topicRepository;
         this.articleRepository = articleRepository;
@@ -28,11 +28,11 @@ public class TopicController {
     }
 
     //List all topics associated with one article
-    @GetMapping("/articles/{articleId}/topics")
+    /*@GetMapping("/articles/{articleId}/topics")
     public ResponseEntity<List<Topic>> listTopicsOnArticle(@PathVariable Long articleId) {
         articleRepository.findById(articleId).orElseThrow(ResourceNotFoundException::new);
         return ResponseEntity.ok(topicRepository.findByArticleId(articleId));
-    }
+    }*/
 
     //Create new topic
     @PostMapping("/topics")

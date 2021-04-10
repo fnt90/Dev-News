@@ -17,13 +17,13 @@ public class Article {
     private String body;
     private String authorName;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "article") //TODO: check if correct
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "article")
     private List<Comment> comments;
 
     @ManyToMany(mappedBy = "articles")
     private List<Topic> topics;
 
-    @OneToMany(mappedBy = "article")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "article")
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "type")
     private List<Reaction> reactions;

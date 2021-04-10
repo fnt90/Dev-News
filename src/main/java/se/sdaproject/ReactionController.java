@@ -28,10 +28,18 @@ public class ReactionController {
         return reactions;
     }
     //View all reactions on an article
-    //@GetMapping("/article/{articleId}/reactions")
+    @GetMapping("/article/{articleId}/reactions")
+    public ResponseEntity<List<Reaction>> listReactionsToArticle(@PathVariable Long articleId) {
+        articleRepository.findById(articleId).orElseThrow(ResourceNotFoundException::new);
+        return ResponseEntity.ok(reactionRepository.findByArticleId(articleId));
+    }
 
     //View all reactions on a comment
-    //@GetMapping("/comments/{commentId}/reactions")
+    @GetMapping("/comments/{commentId}/reactions")
+    public ResponseEntity<List<Reaction>> listReactionsToComment(@PathVariable Long commentId) {
+        commentRepository.findById(commentId).orElseThrow(ResourceNotFoundException::new);
+        return ResponseEntity.ok(reactionRepository.findByCommentId(commentId));
+    }
 
     //Create new reaction
     @PostMapping("/reactions")
@@ -59,11 +67,6 @@ public class ReactionController {
         reactionRepository.save(reaction);
         return ResponseEntity.status(HttpStatus.CREATED).body(reaction);
     }
-    //Update reaction to article
-    //@PutMapping
-
-    //Update reaction to comment
-    //@PutMapping
 
     //Delete reaction
     @DeleteMapping("/reactions/{id}")

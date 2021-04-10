@@ -33,7 +33,7 @@ public class ReactionController {
     //View all reactions on a comment
     //@GetMapping("/comments/{commentId}/reactions")
 
-    //Create new reaction type
+    //Create new reaction
     @PostMapping("/reactions")
     public ResponseEntity<Reaction> createReaction(@RequestBody Reaction reaction) {
         reactionRepository.save(reaction);
@@ -65,10 +65,14 @@ public class ReactionController {
     //Update reaction to comment
     //@PutMapping
 
-    //Delete reaction to article
-    //@DeleteMapping("/articles/{articleId}/reactions/{reactionId}")
+    //Delete reaction
+    @DeleteMapping("/reactions/{id}")
+    public ResponseEntity<Reaction> deleteReaction(@PathVariable Long id) {
+        Reaction reaction = reactionRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+        reactionRepository.delete(reaction);
+        return ResponseEntity.ok(reaction);
+    }
 
-    //Delete reaction to comment
-    //@DeleteMapping("/comments/{commentId}/reactions/{reactionId}")
+
 
 }

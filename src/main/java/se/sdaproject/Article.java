@@ -1,5 +1,9 @@
 package se.sdaproject;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -19,6 +23,10 @@ public class Article {
     @ManyToMany(mappedBy = "articles")
     private List<Topic> topics;
 
+    @OneToMany(mappedBy = "article")
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "type")
+    private List<Reaction> reactions;
 
     public Article() {
 
@@ -68,5 +76,21 @@ public class Article {
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    public List<Topic> getTopics() {
+        return topics;
+    }
+
+    public void setTopics(List<Topic> topics) {
+        this.topics = topics;
+    }
+
+    public List<Reaction> getReactions() {
+        return reactions;
+    }
+
+    public void setReactions(List<Reaction> reactions) {
+        this.reactions = reactions;
     }
 }

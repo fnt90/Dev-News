@@ -45,7 +45,7 @@ public class TopicController {
     @PostMapping("/articles/{articleId}/topics/{topicId}")
     public ResponseEntity<Topic> associateTopic(@PathVariable Long articleId, @PathVariable Long topicId) {
         Article article = articleRepository.findById(articleId).orElseThrow(ResourceNotFoundException::new);
-        Topic topic = topicRepository.findById(topicId).orElseThrow(ResourceNotFoundException::new);
+        Topic topic = topicRepository.findById(topicId).orElseThrow(ResourceNotFoundException::new); //remove?
         topic.getArticles().add(article);
         topicRepository.save(topic);
         return ResponseEntity.status(HttpStatus.CREATED).body(topic);

@@ -2,5 +2,5 @@ package se.sdaproject;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ReactionRepository extends JpaRepository<Article, Long> {
+public interface ReactionRepository extends JpaRepository<Reaction, Long> {
 }

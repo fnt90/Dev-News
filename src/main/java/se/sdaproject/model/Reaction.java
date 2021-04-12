@@ -28,10 +28,17 @@ public class Reaction {
     public Reaction() {
     }
 
+    public Reaction(Long id, String type, Article article, Comment comment) {
+        this.id = id;
+        this.type = type;
+        this.article = article;
+        this.comment = comment;
+    }
+/*
     public Reaction(Long id, String type) {
         this.id = id;
         this.type = type;
-    }
+    }*/
 
     public Long getId() {
         return id;

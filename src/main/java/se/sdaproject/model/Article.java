@@ -32,10 +32,14 @@ public class Article {
 
     }
 
-    public Article(String title, String body, String authorName) {
+    public Article(Long id, String title, String body, String authorName, List<Comment> comments, List<Topic> topics, List<Reaction> reactions) {
+        this.id = id;
         this.title = title;
         this.body = body;
         this.authorName = authorName;
+        this.comments = comments;
+        this.topics = topics;
+        this.reactions = reactions;
     }
 
     public Long getId() {

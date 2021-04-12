@@ -1,5 +1,6 @@
 package se.sdaproject.api;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class TopicController {
     TopicRepository topicRepository;
     ArticleRepository articleRepository;
 
-
+    @Autowired
     public TopicController(TopicRepository topicRepository, ArticleRepository articleRepository) {
         this.topicRepository = topicRepository;
         this.articleRepository = articleRepository;
@@ -31,11 +32,11 @@ public class TopicController {
     }
 
     //List all topics associated with one article
-    /*@GetMapping("/articles/{articleId}/topics")
+    @GetMapping("/articles/{articleId}/topics")
     public ResponseEntity<List<Topic>> listTopicsOnArticle(@PathVariable Long articleId) {
         articleRepository.findById(articleId).orElseThrow(ResourceNotFoundException::new);
-        return ResponseEntity.ok(topicRepository.findByArticleId(articleId));
-    }*/
+        return ResponseEntity.ok(topicRepository.findByArticlesId(articleId));
+    }
 
     //Create new topic
     @PostMapping("/topics")

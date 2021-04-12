@@ -1,5 +1,6 @@
 package se.sdaproject.api;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,7 @@ public class ReactionController {
     ArticleRepository articleRepository;
     CommentRepository commentRepository;
 
+    @Autowired
     public ReactionController(ReactionRepository reactionRepository, ArticleRepository articleRepository, CommentRepository commentRepository) {
         this.reactionRepository = reactionRepository;
         this.articleRepository = articleRepository;
@@ -34,7 +36,8 @@ public class ReactionController {
         List<Reaction> reactions = reactionRepository.findAll();
         return reactions;
     }
-    //View all reactions on an article
+
+    //View all reactions on an article //TODO this is the only broken bit
     @GetMapping("/article/{articleId}/reactions")
     public ResponseEntity<List<Reaction>> listReactionsToArticle(@PathVariable Long articleId) {
         articleRepository.findById(articleId).orElseThrow(ResourceNotFoundException::new);
@@ -48,28 +51,19 @@ public class ReactionController {
         return ResponseEntity.ok(reactionRepository.findByCommentId(commentId));
     }
 
-    //Create new reaction
-    @PostMapping("/reactions")
-    public ResponseEntity<Reaction> createReaction(@RequestBody Reaction reaction) {
-        reactionRepository.save(reaction);
-        return ResponseEntity.status(HttpStatus.CREATED).body(reaction);
-    }
-
     //Add reaction to article
-    @PostMapping("/articles/{articleId}/reactions/{reactionId}")
-    public ResponseEntity<Reaction> reactToArticle(@PathVariable Long articleId, @PathVariable Long reactionId) {
+    @PostMapping("/articles/{articleId}/reactions")
+    public ResponseEntity<Reaction> reactToArticle(@PathVariable Long articleId, @RequestBody Reaction reaction) {
         Article article = articleRepository.findById(articleId).orElseThrow(ResourceNotFoundException::new);
-        Reaction reaction = reactionRepository.findById(reactionId).orElseThrow(ResourceNotFoundException::new);
         reaction.setArticle(article);
         reactionRepository.save(reaction);
         return ResponseEntity.status(HttpStatus.CREATED).body(reaction);
     }
 
     //Add reaction to comment
-    @PostMapping("/comments/{commentId}/reactions/{reactionId}")
-    public ResponseEntity<Reaction> reactToComment(@PathVariable Long commentId, @PathVariable Long reactionId) {
+    @PostMapping("/comments/{commentId}/reactions")
+    public ResponseEntity<Reaction> reactToComment(@PathVariable Long commentId, @RequestBody Reaction reaction) {
         Comment comment = commentRepository.findById(commentId).orElseThrow(ResourceNotFoundException::new);
-        Reaction reaction = reactionRepository.findById(reactionId).orElseThrow(ResourceNotFoundException::new);
         reaction.setComment(comment);
         reactionRepository.save(reaction);
         return ResponseEntity.status(HttpStatus.CREATED).body(reaction);

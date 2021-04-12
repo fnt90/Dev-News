@@ -21,6 +21,16 @@ public class Topic {
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     private List<Article> articles;
 
+    public Topic() {
+
+    }
+
+    public Topic(Long id, String name, List<Article> articles) {
+        this.id = id;
+        this.name = name;
+        this.articles = articles;
+    }
+
     public Long getId() {
         return id;
     }

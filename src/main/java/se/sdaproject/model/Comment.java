@@ -30,7 +30,7 @@ public class Comment {
     @JoinColumn(nullable = false)
     private Article article;
 
-    @OneToMany(mappedBy = "comment")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "comment")
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "type")
     private List<Reaction> reactions;

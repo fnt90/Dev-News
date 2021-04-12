@@ -38,7 +38,7 @@ public class ReactionController {
     }
 
     //View all reactions on an article //TODO this is the only broken bit
-    @GetMapping("/article/{articleId}/reactions")
+    @GetMapping("/articles/{articleId}/reactions")
     public ResponseEntity<List<Reaction>> listReactionsToArticle(@PathVariable Long articleId) {
         articleRepository.findById(articleId).orElseThrow(ResourceNotFoundException::new);
         return ResponseEntity.ok(reactionRepository.findByArticleId(articleId));

@@ -1,36 +1,42 @@
-package se.sdaproject;
+package se.sdaproject.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Entity
-public class Comment {
+public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
-    @Column(nullable = false)
+    private String title;
     private String body;
-
-    @NotBlank
-    @Column(nullable = false)
     private String authorName;
 
-    @ManyToOne
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @JoinColumn(nullable = false)
-    private Article article;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "article")
+    private List<Comment> comments;
 
-    @OneToMany(mappedBy = "comment")
+    @ManyToMany(mappedBy = "articles")
+    private List<Topic> topics;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "article")
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "type")
     private List<Reaction> reactions;
+
+    public Article() {
+
+    }
+
+    public Article(String title, String body, String authorName) {
+        this.title = title;
+        this.body = body;
+        this.authorName = authorName;
+    }
 
     public Long getId() {
         return id;
@@ -38,6 +44,14 @@ public class Comment {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getBody() {
@@ -52,16 +66,24 @@ public class Comment {
         return authorName;
     }
 
-    public void setAuthorName(String authorName) {
+    public void setAuthorName() {
         this.authorName = authorName;
     }
 
-    public Article getArticle() {
-        return article;
+    public List<Comment> getComments() {
+        return comments;
     }
 
-    public void setArticle(Article article) {
-        this.article = article;
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public List<Topic> getTopics() {
+        return topics;
+    }
+
+    public void setTopics(List<Topic> topics) {
+        this.topics = topics;
     }
 
     public List<Reaction> getReactions() {

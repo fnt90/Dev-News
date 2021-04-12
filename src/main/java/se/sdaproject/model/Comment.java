@@ -1,10 +1,14 @@
-package se.sdaproject;
+package se.sdaproject.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import se.sdaproject.model.Article;
+import se.sdaproject.model.Reaction;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Entity
 public class Comment {
@@ -25,6 +29,13 @@ public class Comment {
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @JoinColumn(nullable = false)
     private Article article;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "comment")
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "type")
+    private List<Reaction> reactions;
+
+
 
     public Long getId() {
         return id;
@@ -56,5 +67,13 @@ public class Comment {
 
     public void setArticle(Article article) {
         this.article = article;
+    }
+
+    public List<Reaction> getReactions() {
+        return reactions;
+    }
+
+    public void setReactions(List<Reaction> reactions) {
+        this.reactions = reactions;
     }
 }

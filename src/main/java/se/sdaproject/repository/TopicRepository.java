@@ -1,9 +1,10 @@
-package se.sdaproject;
+package se.sdaproject.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import se.sdaproject.model.Topic;
 
 import java.util.List;
 
 public interface TopicRepository extends JpaRepository<Topic, Long> {
-    /*List<Topic> findByArticleId(Long articleID);*/
+    List<Topic> findByArticlesId(Long articlesID);
 }

@@ -1,4 +1,8 @@
-package se.sdaproject;
+package se.sdaproject.model;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.util.List;
@@ -13,7 +17,19 @@ public class Topic {
     private String name;
 
     @ManyToMany
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     private List<Article> articles;
+
+    public Topic() {
+
+    }
+
+    public Topic(Long id, String name, List<Article> articles) {
+        this.id = id;
+        this.name = name;
+        this.articles = articles;
+    }
 
     public Long getId() {
         return id;

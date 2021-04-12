@@ -1,10 +1,14 @@
-package se.sdaproject;
+package se.sdaproject.api;
 
-import org.aspectj.lang.annotation.DeclareError;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import se.sdaproject.api.exception.ResourceNotFoundException;
+import se.sdaproject.model.Article;
+import se.sdaproject.model.Topic;
+import se.sdaproject.repository.ArticleRepository;
+import se.sdaproject.repository.TopicRepository;
 
 import java.util.List;
 
@@ -14,7 +18,7 @@ public class TopicController {
     TopicRepository topicRepository;
     ArticleRepository articleRepository;
 
-
+    @Autowired
     public TopicController(TopicRepository topicRepository, ArticleRepository articleRepository) {
         this.topicRepository = topicRepository;
         this.articleRepository = articleRepository;
@@ -28,11 +32,11 @@ public class TopicController {
     }
 
     //List all topics associated with one article
-    /*@GetMapping("/articles/{articleId}/topics")
+    @GetMapping("/articles/{articleId}/topics")
     public ResponseEntity<List<Topic>> listTopicsOnArticle(@PathVariable Long articleId) {
         articleRepository.findById(articleId).orElseThrow(ResourceNotFoundException::new);
-        return ResponseEntity.ok(topicRepository.findByArticleId(articleId));
-    }*/
+        return ResponseEntity.ok(topicRepository.findByArticlesId(articleId));
+    }
 
     //Create new topic
     @PostMapping("/topics")
@@ -45,7 +49,7 @@ public class TopicController {
     @PostMapping("/articles/{articleId}/topics/{topicId}")
     public ResponseEntity<Topic> associateTopic(@PathVariable Long articleId, @PathVariable Long topicId) {
         Article article = articleRepository.findById(articleId).orElseThrow(ResourceNotFoundException::new);
-        Topic topic = topicRepository.findById(topicId).orElseThrow(ResourceNotFoundException::new);
+        Topic topic = topicRepository.findById(topicId).orElseThrow(ResourceNotFoundException::new); //remove?
         topic.getArticles().add(article);
         topicRepository.save(topic);
         return ResponseEntity.status(HttpStatus.CREATED).body(topic);

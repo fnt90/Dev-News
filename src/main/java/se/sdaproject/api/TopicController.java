@@ -46,6 +46,17 @@ public class TopicController {
     }
 
     //Associate topic with one article (may also create that topic if nonexistent)
+    @PostMapping("/articles/{articleId}/topics")
+    public ResponseEntity<Topic> associateTopic(@PathVariable Long articleId, @RequestBody Topic topic) {
+        Article article = articleRepository.findById(articleId).orElseThrow(ResourceNotFoundException::new);
+
+        Topic newTopic = topicRepository.findByName(topic.getName()).orElse(topic);
+        List<Article> topicArticles = newTopic.getArticles();
+        topicArticles.add(article);
+        return ResponseEntity.status(HttpStatus.CREATED).body(topicRepository.save(newTopic));
+    }
+
+    /*//Associate topic with one article
     @PostMapping("/articles/{articleId}/topics/{topicId}")
     public ResponseEntity<Topic> associateTopic(@PathVariable Long articleId, @PathVariable Long topicId) {
         Article article = articleRepository.findById(articleId).orElseThrow(ResourceNotFoundException::new);
@@ -53,7 +64,7 @@ public class TopicController {
         topic.getArticles().add(article);
         topicRepository.save(topic);
         return ResponseEntity.status(HttpStatus.CREATED).body(topic);
-    }
+    }*/
 
     //Update topic
     @PutMapping("/topics/{id}")

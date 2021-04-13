@@ -46,9 +46,18 @@ Endpoints for the topic API (prescribed):
 | `GET`    | `/topics/{topicId}/articles` | return all articles associated with the topic given by `topicId` |
 
 
-### Reactions
+### Reactions (Bonus Exercise)
 
 Endpoints for the reaction API:
+
+| HTTP Method | HTTP Path | Action |
+| ------------|-----------|--------|
+| `GET`    | `/reactions` | View all created reactions |
+| `GET`    | `/articles/{articleId}/reactions`| View all reactions on an article |
+| `GET`    | `/comments/{commentId}/reactions`| View all reactions on a comment |
+| `POST`   | `/articles/{articleId}/reactions`| Add reaction to article |
+| `POST`   | `/comments/{commentId}/reactions`| Add reaction to comment |
+| `DELETE` | `/reactions/{id}`| Delete reaction |
 
 ## Files & Directories
 

@@ -17,8 +17,6 @@ import java.util.List;
 @RestController
 public class ReactionController {
 
-    //Structure should be similar to topic, but the owning side should be article/comment?
-
     ReactionRepository reactionRepository;
     ArticleRepository articleRepository;
     CommentRepository commentRepository;

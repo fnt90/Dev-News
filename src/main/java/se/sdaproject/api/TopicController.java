@@ -56,15 +56,15 @@ public class TopicController {
         return ResponseEntity.status(HttpStatus.CREATED).body(topicRepository.save(newTopic));
     }
 
-    /*//Associate topic with one article
+    //Associate (existing) topic with one article
     @PostMapping("/articles/{articleId}/topics/{topicId}")
     public ResponseEntity<Topic> associateTopic(@PathVariable Long articleId, @PathVariable Long topicId) {
         Article article = articleRepository.findById(articleId).orElseThrow(ResourceNotFoundException::new);
-        Topic topic = topicRepository.findById(topicId).orElseThrow(ResourceNotFoundException::new); //remove?
+        Topic topic = topicRepository.findById(topicId).orElseThrow(ResourceNotFoundException::new);
         topic.getArticles().add(article);
         topicRepository.save(topic);
         return ResponseEntity.status(HttpStatus.CREATED).body(topic);
-    }*/
+    }
 
     //Update topic
     @PutMapping("/topics/{id}")

@@ -45,6 +45,8 @@ Endpoints for the topic API (prescribed):
 | `DELETE` | `/articles/{articleId}/topics/{topicId}` | delete the association of a topic for the given article. The topic & article themselves remain |
 | `GET`    | `/topics/{topicId}/articles` | return all articles associated with the topic given by `topicId` |
 
+ - Additional endpoint added:
+- `POST`, `/articles/{articleId}/topics/{topicId}`, Associate (existing) topic with one article
 
 ### Reactions (Bonus Exercise)
 
@@ -91,9 +93,9 @@ Following this, the recommended way of sending commands to the API is using Post
 
 Listed below are some sample Postman commands, with HTTP Method, address, title, and content.
 
--  GET, localhost:8080/articles, List All Articles
+-  GET, `localhost:8080/articles`, List All Articles
 
-- POST, localhost:8080/articles, Create New Article,
+- POST, `localhost:8080/articles`, Create New Article,
   ```
   {
      "title":"99 reasons to learn Spring",
@@ -101,14 +103,14 @@ Listed below are some sample Postman commands, with HTTP Method, address, title,
      "authorName":"Fiona Thompson"
   }
   ```
-- POST, localhost:8080/articles/1/comments, Create Comment On Article 1,
+- POST, `localhost:8080/articles/1/comments`, Create Comment On Article 1,
     ```
   {
        "body":"This article is very well written!",
        "authorName":"Fiona Thompson"
   }
     ```
-- PUT, localhost:8080/comments/1, Update Comment With ID 1,
+- PUT, `localhost:8080/comments/1`, Update Comment With ID 1,
     ```
   {
        "body":"This article is not very well written.",
@@ -118,33 +120,31 @@ Listed below are some sample Postman commands, with HTTP Method, address, title,
        }
   }
     ```
-- GET, localhost:8080/comments?authorName=Frank, View Comments With authorName Frank
+- GET, `localhost:8080/comments?authorName=Frank`, View Comments With authorName Frank
   
-- POST, localhost:8080/articles/1/topics, Create New Topic On Article ID 1,
+- POST, `localhost:8080/articles/1/topics`, Create New Topic On Article ID 1,
     ```
   {
        "name":"spring"
   }
     ```
-- POST, localhost:8080/articles/1/reactions, Add Heart Reaction To Article ID 1,
+- POST, `localhost:8080/articles/1/reactions`, Add Heart Reaction To Article ID 1,
   ```
   {
      "type":"heart"
   }
     ```
-- POST, localhost:8080/comments/1/reactions, Add Award Reaction To Comment ID 1,
+- POST, `localhost:8080/comments/1/reactions`, Add Award Reaction To Comment ID 1,
     ```
   {
        "type":"award"
   }
     ```
-- GET, localhost:8080/comments/1/reactions, View All Reactions On Comment ID 1
+- GET, `localhost:8080/comments/1/reactions`, View All Reactions On Comment ID 1
 
-- GET, localhost:8080/articles/1/topics, List All Topics Associated With Article ID 1
+- GET, `localhost:8080/articles/1/topics`, List All Topics Associated With Article ID 1
 
-- DELETE, localhost:8080/articles/1/topics/1, Detete Topic 1 From Article 1
-
-
+- DELETE, `localhost:8080/articles/1/topics/1`, Detete Topic 1 From Article 1
 
 
 

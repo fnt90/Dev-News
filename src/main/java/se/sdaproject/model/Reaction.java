@@ -3,7 +3,6 @@ package se.sdaproject.model;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import javax.persistence.*;
 
 @Entity
@@ -34,11 +33,6 @@ public class Reaction {
         this.article = article;
         this.comment = comment;
     }
-/*
-    public Reaction(Long id, String type) {
-        this.id = id;
-        this.type = type;
-    }*/
 
     public Long getId() {
         return id;

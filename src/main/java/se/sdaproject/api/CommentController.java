@@ -35,7 +35,6 @@ public class CommentController {
     //View all comments by one author
     @GetMapping(value = "/comments", params = {"authorName"})
     public ResponseEntity<List<Comment>> viewAllCommentsByAuthor(@RequestParam String authorName) {
-        //commentRepository.findByAuthorName(authorName).orElseThrow(ResourceNotFoundException::new);
         return ResponseEntity.ok(commentRepository.findByAuthorName(authorName));
     }
 
@@ -64,6 +63,5 @@ public class CommentController {
         commentRepository.delete(comment);
         return ResponseEntity.ok(comment);
     }
-
 
 }
